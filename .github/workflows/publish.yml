@@ -23,4 +23,7 @@ jobs:
           java-version: '21'
       - name: Verify release is reachable from main
         run: git merge-base --is-ancestor "$GITHUB_SHA" origin/main
-      - run: ./gradlew check cyclonedxBom publish
+      - run: ./gradlew check cyclonedxBom publish -Pversion="${GITHUB_REF_NAME#v}"
+        env:
+          GITHUB_ACTOR: ${{ github.actor }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
